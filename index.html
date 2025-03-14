@@ -45,7 +45,13 @@
                 const text = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(text, "text/html");
-                const element = doc.querySelector("#svelte > div.container.svelte-1s13kgg > div > div:nth-child(4) > table > tr:nth-child(7) > td:nth-child(2)");
+    
+                // Log the response to debug
+                console.log(text);
+    
+                // Adjust selector to match the correct element
+                const element = doc.querySelector("td.svelte-1gjn8j2"); 
+                
                 if (element) {
                     document.querySelector(".player-count").textContent = `Players: ${element.textContent.trim()}`;
                 } else {
@@ -55,9 +61,10 @@
                 document.querySelector(".player-count").textContent = "Error fetching data.";
             }
         }
-    
-        setTimeout(fetchPlayerCount, 5000); // Delay initial fetch by 2 seconds
+        
+        setTimeout(fetchPlayerCount, 2000); // Delay first fetch
         setInterval(fetchPlayerCount, 30000); // Refresh every 30 seconds
-    </script>    
+    </script>
+       
 </body>
 </html>
