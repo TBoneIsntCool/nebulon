@@ -55,8 +55,9 @@
                 document.querySelector(".player-count").textContent = "Error fetching data.";
             }
         }
-        fetchPlayerCount();
+    
+        setTimeout(fetchPlayerCount, 2000); // Delay initial fetch by 2 seconds
         setInterval(fetchPlayerCount, 30000); // Refresh every 30 seconds
-    </script>
+    </script>    
 </body>
 </html>
