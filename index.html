@@ -1,70 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nebulon - Astroneer Dedicated Server</title>
-    <link rel="icon" href="imgs/logo.ico" type="image/x-icon">
-    <style>
-        body {
-            background-color: #333;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #222;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-        }
-        h1 {
-            color: #04a4dc;
-        }
-        .player-count {
-            font-size: 1.5em;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nebulon Server Status</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #1a1a1a;
+      color: #fff;
+      overflow: hidden; /* Disable scrolling initially */
+    }
+
+    /* Smaller top bar */
+    header {
+      background-color: #04a9ec;
+      height: 6vh; /* Reduced height */
+      padding: 0 1.5vw;
+      text-align: left;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      height: 4vh; /* Smaller logo */
+      margin-right: 1vw;
+    }
+
+    header h1 {
+      color: white;
+      font-size: 2vw; /* Smaller text */
+      margin: 0;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #main-title {
+      font-size: 5vw;
+      font-weight: bold;
+      color: #04a9ec;
+    }
+
+    #sub-title {
+      font-size: 2.5vw;
+      margin-top: 20px;
+      color: #999;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+
+    .content {
+      padding: 80px 10px;
+      text-align: center;
+    }
+
+    /* Adjusted server status box */
+    .status {
+      background-color: #333;
+      padding: 1.5vh;
+      border-radius: 0.8vw;
+      width: 30vw; /* Smaller width */
+      height: 15vh; /* Smaller height */
+      max-width: 400px;
+      max-height: 180px;
+      margin: 40px auto 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Adjusted server status text */
+    .status h2 {
+      font-size: 1.8vw;
+      margin-bottom: 5px;
+    }
+
+    .status p {
+      margin: 5px 0;
+      font-size: 1.4vw;
+      line-height: 1.2em;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img src="imgs/logo.ico" alt="Nebulon Logo" width="100">
-        <h1>Nebulon Astroneer Server</h1>
-        <p class="player-count">Fetching player count...</p>
-    </div>
+  <header>
+    <img src="imgs/logo.ico" alt="Nebulon Logo">
+    <h1>Nebulon</h1>
+  </header>
 
-    <script>
-        async function fetchPlayerCount() {
-            try {
-                const response = await fetch("https://astroservercheck.joejoetv.de/?url=147.185.221.16:23237");
-                const text = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(text, "text/html");
-    
-                // Log the response to debug
-                console.log(text);
-    
-                // Adjust selector to match the correct element
-                const element = doc.querySelector("td.svelte-1gjn8j2"); 
-                
-                if (element) {
-                    document.querySelector(".player-count").textContent = `Players: ${element.textContent.trim()}`;
-                } else {
-                    document.querySelector(".player-count").textContent = "Could not retrieve player count.";
-                }
-            } catch (error) {
-                document.querySelector(".player-count").textContent = "Error fetching data.";
-            }
+  <div class="hero">
+    <div id="main-title">Nebulon</div>
+    <div id="sub-title">The highest quality Astroneer Dedicated Server</div>
+  </div>
+
+  <div class="content">
+    <div class="status">
+      <h2>Server Status</h2>
+      <div id="status">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    // Ensure the page loads at the top
+    window.scrollTo(0, 0);
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    let hasRevealedText = false;
+
+    async function fetchServerStatus() {
+      try {
+        const response = await fetch('https://nebulon-backend.tbone-unity.workers.dev');
+        const data = await response.json();
+
+        if (data) {
+          document.getElementById('status').innerHTML = `
+            <p>Online Players: ${data.onlinePlayers}</p>
+            <p>Max Players: ${data.maxPlayers}</p>
+          `;
+        } else {
+          throw new Error('No data received');
         }
+      } catch (error) {
+        document.getElementById('status').innerHTML = 'Error fetching server status: ' + error.message;
+      }
+    }
+
+    fetchServerStatus();
+
+    window.addEventListener('wheel', (event) => {
+      if (!hasRevealedText) {
+        event.preventDefault(); // Prevent default scroll on first scroll attempt
+        const subTitle = document.getElementById('sub-title');
+        subTitle.style.opacity = "1";
+        subTitle.style.transform = "translateY(0)";
         
-        setTimeout(fetchPlayerCount, 2000); // Delay first fetch
-        setInterval(fetchPlayerCount, 30000); // Refresh every 30 seconds
-    </script>
-       
+        // Enable scrolling immediately after revealing text
+        document.body.style.overflow = "auto";
+        hasRevealedText = true;
+      }
+    }, { passive: false });
+  </script>
 </body>
 </html>
