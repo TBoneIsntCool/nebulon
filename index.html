@@ -27,6 +27,7 @@
       z-index: 10;
       display: flex;
       align-items: center;
+      cursor: pointer;
     }
 
     header img {
@@ -104,7 +105,8 @@
   </style>
 </head>
 <body>
-  <header>
+  <!-- Top Bar with Clickable Logo -->
+  <header onclick="window.location.href='index.html'">
     <img src="imgs/logo.ico" alt="Nebulon Logo">
     <h1>Nebulon</h1>
   </header>
@@ -118,6 +120,15 @@
     <div class="status">
       <h2>Server Status</h2>
       <div id="status">Loading...</div>
+    </div>
+
+    <!-- How to Join Section -->
+    <div class="how-to-join">
+      <h2>How to Join</h2>
+      <p>Follow the steps below to join the Nebulon Astroneer Dedicated Server:</p>
+      <p>1. Visit our <a href="/joining" style="color: #04a9ec;">Joining Page</a> to get detailed instructions.</p>
+      <p>2. Follow the instructions to connect to the server.</p>
+      <p>3. Enjoy your time playing with us!</p>
     </div>
   </div>
 
