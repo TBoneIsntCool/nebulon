@@ -11,7 +11,7 @@
       padding: 0;
       background-color: #1a1a1a;
       color: #fff;
-      overflow: hidden; /* Disable scrolling initially */
+      overflow: hidden;
     }
 
     /* Smaller top bar */
@@ -37,7 +37,7 @@
 
     header h1 {
       color: white;
-      font-size: 2vw; /* Smaller text */
+      font-size: 2vw;
       margin: 0;
     }
 
@@ -75,8 +75,8 @@
       background-color: #333;
       padding: 1.5vh;
       border-radius: 0.8vw;
-      width: 30vw; /* Smaller width */
-      height: 15vh; /* Smaller height */
+      width: 30vw;
+      height: 15vh;
       max-width: 400px;
       max-height: 180px;
       margin: 40px auto 0;
@@ -97,6 +97,36 @@
       margin: 5px 0;
       font-size: 1.4vw;
       line-height: 1.2em;
+    }
+
+    .how-to-whitelist {
+      background-color: #333;
+      color: #fff;
+      padding: 40px;
+      margin-top: 50px;
+      border-radius: 1vw;
+      width: 70vw;
+      max-width: 600px;
+      margin: 40px auto;
+      text-align: center;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .how-to-whitelist:hover {
+      background-color: #04a9ec;
+    }
+
+    .how-to-whitelist h2 {
+      font-size: 3vw;
+      font-weight: bold;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .how-to-whitelist p {
+      font-size: 1.5vw;
+      margin: 10px 0;
     }
 
     html {
@@ -122,13 +152,10 @@
       <div id="status">Loading...</div>
     </div>
 
-    <!-- How to Join Section -->
-    <div class="how-to-join">
-      <h2>How to Join</h2>
-      <p>Follow the steps below to join the Nebulon Astroneer Dedicated Server:</p>
-      <p>1. Visit our <a href="/joining" style="color: #04a9ec;">Joining Page</a> to get detailed instructions.</p>
-      <p>2. Follow the instructions to connect to the server.</p>
-      <p>3. Enjoy your time playing with us!</p>
+    <!-- How to Whitelist Section -->
+    <div class="how-to-whitelist" onclick="window.location.href='/whitelist.html'">
+      <h2>How to Whitelist</h2>
+      <p>Click here to find out how to whitelist your account for the Nebulon server.</p>
     </div>
   </div>
 
