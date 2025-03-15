@@ -17,7 +17,7 @@
     /* Smaller top bar */
     header {
       background-color: #04a9ec;
-      height: 6vh; /* Reduced height */
+      height: 6vh;
       padding: 0 1.5vw;
       text-align: left;
       position: fixed;
@@ -31,7 +31,7 @@
     }
 
     header img {
-      height: 4vh; /* Smaller logo */
+      height: 4vh;
       margin-right: 1vw;
     }
 
@@ -70,35 +70,7 @@
       text-align: center;
     }
 
-    /* Adjusted server status box */
-    .status {
-      background-color: #333;
-      padding: 1.5vh;
-      border-radius: 0.8vw;
-      width: 30vw;
-      height: 15vh;
-      max-width: 400px;
-      max-height: 180px;
-      margin: 40px auto 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
-    /* Adjusted server status text */
-    .status h2 {
-      font-size: 1.8vw;
-      margin-bottom: 5px;
-    }
-
-    .status p {
-      margin: 5px 0;
-      font-size: 1.4vw;
-      line-height: 1.2em;
-    }
-
+    /* Adjusted how-to-whitelist section above server stats */
     .how-to-whitelist {
       background-color: #333;
       color: #fff;
@@ -129,6 +101,39 @@
       margin: 10px 0;
     }
 
+    /* Adjusted server status box at the bottom */
+    .status {
+      background-color: #333;
+      padding: 1.5vh;
+      border-radius: 0.8vw;
+      width: 30vw;
+      height: 15vh;
+      max-width: 400px;
+      max-height: 180px;
+      margin: 40px auto 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: fixed;
+      bottom: 20px; /* Position the server stats at the bottom */
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Adjusted server status text */
+    .status h2 {
+      font-size: 1.8vw;
+      margin-bottom: 5px;
+    }
+
+    .status p {
+      margin: 5px 0;
+      font-size: 1.4vw;
+      line-height: 1.2em;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -147,16 +152,17 @@
   </div>
 
   <div class="content">
-    <div class="status">
-      <h2>Server Status</h2>
-      <div id="status">Loading...</div>
-    </div>
-
-    <!-- How to Whitelist Section -->
+    <!-- How to Whitelist Section above server stats -->
     <div class="how-to-whitelist" onclick="window.location.href='/whitelist.html'">
       <h2>How to Whitelist</h2>
       <p>Click here to find out how to whitelist your account for the Nebulon server.</p>
     </div>
+  </div>
+
+  <!-- Server Status Box at the Bottom -->
+  <div class="status">
+    <h2>Server Status</h2>
+    <div id="status">Loading...</div>
   </div>
 
   <script>
