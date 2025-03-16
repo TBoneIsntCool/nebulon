@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How to Whitelist for Nebulon Server</title>
+  <link rel="icon" type="image/x-icon" href="imgs/logo.ico">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -11,34 +12,64 @@
       padding: 0;
       background-color: #1a1a1a;
       color: #fff;
+      overflow: hidden;
     }
 
+    /* Top Bar */
     header {
       background-color: #04a9ec;
-      padding: 10px 20px;
-      text-align: left;
+      height: 6vh;
+      padding: 0 1.5vw;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 10;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Clickable Left Section */
+    .left-section {
       display: flex;
       align-items: center;
       cursor: pointer;
     }
 
     header img {
-      width: 40px;
-      margin-right: 10px;
+      height: 3.5vh;
+      margin-right: 0.8vw;
     }
 
     header h1 {
+      font-size: 1.5vw;
       color: white;
-      font-size: 1.5em;
       margin: 0;
     }
 
+    /* Discord Icon */
+    .discord-icon {
+      height: 3.8vh;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      margin-right: 3vw;
+    }
+
+    .discord-icon:hover {
+      opacity: 0.7;
+    }
+
+    /* Hyperlinks */
+    a {
+      color: #04a9ec;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Page Content */
     .content {
       margin-top: 100px;
       text-align: center;
@@ -64,27 +95,73 @@
       margin: 10px 0;
     }
 
+    /* Online Players Bar */
+    .online-players-bar {
+      background-color: #2a2a2a;
+      color: #ccc;
+      height: 3vh;
+      font-size: 1vw;
+      text-align: center;
+      line-height: 3vh;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      border-top: 1px solid #222;
+      z-index: 10;
+    }
+
     html {
       scroll-behavior: smooth;
     }
   </style>
 </head>
 <body>
-  <header onclick="window.location.href='index.html'">
-    <img src="imgs/logo.ico" alt="Nebulon Logo">
-    <h1>Nebulon</h1>
+  <!-- Top Bar -->
+  <header>
+    <div class="left-section" onclick="window.location.href='index.html'">
+      <img src="imgs/logo.ico" alt="Nebulon Logo">
+      <h1>Nebulon</h1>
+    </div>
+    <img src="imgs/discord.png" alt="Discord" class="discord-icon" onclick="window.open('https://discord.gg/cCwkq2sqXS', '_blank')">
   </header>
 
   <div class="content">
     <div class="instructions">
       <h2>How to Whitelist for Nebulon</h2>
       <p>Follow these steps to whitelist your account:</p>
-      <p>1. Download the game and install it.</p>
-      <p>2. Join our Discord server or visit our website.</p>
-      <p>3. Follow the instructions to submit your whitelisting request.</p>
-      <p>4. Wait for approval from the server administrators.</p>
-      <p>5. Once approved, you’ll be added to the whitelist and able to join the server!</p>
+      <p>1. Join the <a href="https://discord.gg/cCwkq2sqXS">Nebulon Discord Server</a></p>
+      <p>2. Head over to the whitelist channel.</p>
+      <p>3. Visit the form and submit it.</p>
+      <p>4. Wait for approval from a staff member.</p>
+      <p>5. Once approved, you’ll be added to the whitelist and able to join the server.</p>
     </div>
   </div>
+
+  <!-- Online Players Bar -->
+  <div class="online-players-bar" id="online-players">
+    Online Players: Loading...
+  </div>
+
+  <script>
+    async function updateOnlinePlayers() {
+      try {
+        const response = await fetch('https://nebulon-backend.tbone-unity.workers.dev');
+        const data = await response.json();
+  
+        if (data) {
+          document.getElementById('online-players').textContent = 
+            `Online Players: ${data.onlinePlayers} / ${data.maxPlayers}`;
+        } else {
+          throw new Error('No data received');
+        }
+      } catch (error) {
+        document.getElementById('online-players').textContent = 
+          'Online Players: Error fetching data';
+      }
+    }
+  
+    updateOnlinePlayers();
+    setInterval(updateOnlinePlayers, 30000);
+  </script>
 </body>
 </html>
