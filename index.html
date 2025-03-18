@@ -43,7 +43,7 @@
     }
 
     header h1 {
-      font-size: 1.5vw; /* Reduced size */
+      font-size: 1.5vw;
       color: white;
       margin: 0;
     }
@@ -53,7 +53,7 @@
       height: 3.8vh;
       cursor: pointer;
       transition: opacity 0.3s ease;
-      margin-right: 3vw; /* Moved inward from the right edge */
+      margin-right: 3vw;
     }
 
     .discord-icon:hover {
@@ -194,20 +194,24 @@
         const data = await response.json();
   
         if (data) {
-          document.getElementById('online-players').textContent = 
-            `Online Players: ${data.onlinePlayers} / ${data.maxPlayers}`;
+          if (data.onlinePlayers === -1 && data.maxPlayers === -1) {
+            document.getElementById('online-players').textContent = 'Server is expirencing issues';
+          } else {
+            document.getElementById('online-players').textContent =
+              `Online Players: ${data.onlinePlayers} / ${data.maxPlayers}`;
+          }
         } else {
           throw new Error('No data received');
         }
       } catch (error) {
-        document.getElementById('online-players').textContent = 
+        document.getElementById('online-players').textContent =
           'Online Players: Error fetching data';
       }
     }
   
     updateOnlinePlayers();
-    setInterval(updateOnlinePlayers, 30000); 
-
+    setInterval(updateOnlinePlayers, 30000);
+  
     window.scrollTo(0, 0);
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
