@@ -195,7 +195,7 @@
   
         if (data) {
           if (data.onlinePlayers === -1 && data.maxPlayers === -1) {
-            document.getElementById('online-players').textContent = 'Server is expirencing issues';
+            document.getElementById('online-players').textContent = 'Server is experiencing issues';
           } else {
             document.getElementById('online-players').textContent =
               `Online Players: ${data.onlinePlayers} / ${data.maxPlayers}`;
